@@ -564,7 +564,7 @@ async function scrapeTradingViewNews() {
     }
   });
 
-  const stockUrls = [];
+  let stockUrls = [];
 
   try {
     stockUrls = await getStockUrlsFromSheet();
