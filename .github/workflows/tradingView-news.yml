@@ -1,0 +1,35 @@
+name: Run TradingView News Scraper
+
+on:
+  schedule:
+    - cron: "30 13 * * *" # Runs daily at 7:00 PM IST
+  workflow_dispatch:
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Create .env file
+        run: |
+          echo "SHEET_ID=${{ secrets.SHEET_ID }}" >> .env
+          echo "WP_USER=${{ secrets.WP_USER }}" >> .env
+          echo "WP_PASS=${{ secrets.WP_PASS }}" >> .env
+          echo "SHEET_NAME=Sheet1" >> .env
+          echo "GOOGLE_SERVICE_ACCOUNT_EMAIL=${{ secrets.GOOGLE_SERVICE_ACCOUNT_EMAIL }}" >> .env
+          echo "GOOGLE_PRIVATE_KEY=\"${{ secrets.GOOGLE_PRIVATE_KEY }}\"" >> .env
+          echo "WP_API_URL=${{ secrets.WP_API_URL }}" >> .env
+
+      - name: Run TradingView Scraper
+        run: node index.js
