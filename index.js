@@ -573,6 +573,12 @@ async function scrapeTradingViewNews() {
       await browser.close();
       return;
     }
+    const batchIndex = parseInt(process.argv[2] || "0", 10);
+    const BATCH_SIZE = 550;
+    const start = batchIndex * BATCH_SIZE;
+    const end = (batchIndex + 1) * BATCH_SIZE;
+    stockUrls = stockUrls.slice(start, end);
+    console.log(`Processing batch ${batchIndex}: ${stockUrls.length} stocks`);
   } catch (error) {
     console.error(
       `Failed to retrieve stock URLs from Google Sheet: ${error.message}`
