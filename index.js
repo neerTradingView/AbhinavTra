@@ -3,7 +3,7 @@ import puppeteer from "puppeteer";
 import axios from "axios";
 import dotenv from "dotenv";
 
-dotenv.config();
+dotenv.config(); //ds
 
 const CONFIG = {
   wpApiUrl:
